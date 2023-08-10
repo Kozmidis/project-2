@@ -1,0 +1,21 @@
+.progressContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardGrid {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  gap: 15px;
+}
+
+.cardSelectCont {
+  display: flex;
+  justify-content: space-between;
+}

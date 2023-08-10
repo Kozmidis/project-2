@@ -1,0 +1,19 @@
+.profileBar {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  height: 100%;
+  width: 100%;
+}
+
+.profileBarItem {
+  margin-top: 15px;
+}
+
+.profileBarTitle {
+  align-self: start;
+
+  margin: 15px;
+}
