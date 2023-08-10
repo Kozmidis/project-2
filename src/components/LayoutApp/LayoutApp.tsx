@@ -17,7 +17,7 @@ export default function LayoutApp({ children }: { children: React.ReactNode }) {
     lineHeight: "64px",
     width: "100%",
     backgroundColor: pathName === "/dashboard" ? "#f5f5f5" : "#fff",
-    maxHeight: "100px",
+    minHeight: "88px",
   };
 
   return (

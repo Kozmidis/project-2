@@ -28,15 +28,28 @@ export const HeaderApp = ({ pathName }: { pathName: string }) => {
           style={{
             display: "flex",
             alignItems: "center",
+            justifyContent: "end",
           }}
           span={12}
         >
-          <Search
-            placeholder="Search by anything"
-            onSearch={onSearch}
-            enterButton
-          />
-          {pathName !== "/dashboard" && <IconContainer />}
+          <div
+            style={{
+              display: "flex",
+              gap: "200px",
+              padding: 15,
+            }}
+          >
+            <Search
+              placeholder="Search by anything"
+              onSearch={onSearch}
+              enterButton
+            />
+            {pathName !== "/dashboard" && (
+              <Col style={{ display: "flex" }}>
+                <IconContainer />
+              </Col>
+            )}
+          </div>
         </Col>
       </Row>
     </>

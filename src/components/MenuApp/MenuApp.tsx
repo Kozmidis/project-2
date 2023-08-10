@@ -56,7 +56,11 @@ const items: MenuProps["items"] = [
       null,
       [
         getItem(<Link href="/jobs">Jobs</Link>, "/jobs", <WalletFilled />),
-        getItem("Cadidates", "/cadidates", <MehFilled />),
+        getItem(
+          <Link href="/candidates">Candidates</Link>,
+          "/candidates",
+          <MehFilled />
+        ),
         getItem("My Referals", "6", <SignalFilled />),
         getItem("Career Site", "7", <FolderOpenFilled />),
       ],

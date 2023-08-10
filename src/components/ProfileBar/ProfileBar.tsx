@@ -22,6 +22,7 @@ export const ProfileBar = () => {
     <>
       <div className={styles.profileBar}>
         <IconContainer />
+        <div style={{ marginTop: "63px" }}></div>
         <Avatar size={64} icon={<UserOutlined />} />
         <h2 className={styles.profileBarItem}>User</h2>
         <p>directory...</p>
