@@ -1,8 +1,15 @@
 import React from "react";
 import {
-  AppstoreOutlined,
-  MailOutlined,
-  SettingOutlined,
+  AppstoreFilled,
+  HomeFilled,
+  MessageFilled,
+  CalendarFilled,
+  WalletFilled,
+  MehFilled,
+  SignalFilled,
+  FolderOpenFilled,
+  SettingFilled,
+  SnippetsFilled,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
@@ -26,48 +33,43 @@ function getItem(
 }
 
 const items: MenuProps["items"] = [
-  getItem("Navigation One", "sub1", <MailOutlined />, [
+  getItem("Human R", "sub1", <HomeFilled />, [
     getItem(
-      "Item 1",
+      "MENU",
       "g1",
       null,
-      [getItem("Option 1", "1"), getItem("Option 2", "2")],
+      [
+        getItem("Dashboard", "1", <AppstoreFilled />),
+        getItem("Message", "2", <MessageFilled />),
+        getItem("Calendar", "3", <CalendarFilled />),
+      ],
       "group"
     ),
     getItem(
-      "Item 2",
+      "RECRUITMENT",
       "g2",
       null,
-      [getItem("Option 3", "3"), getItem("Option 4", "4")],
+      [
+        getItem("Jobs", "4", <WalletFilled />),
+        getItem("Cadidates", "5", <MehFilled />),
+        getItem("My Referals", "6", <SignalFilled />),
+        getItem("Career Site", "7", <FolderOpenFilled />),
+      ],
+      "group"
+    ),
+    getItem(
+      "ORGANIZATION",
+      "g3",
+      null,
+      [
+        getItem("Employee", "8", <MehFilled />),
+        getItem("Structure", "9", <SignalFilled />),
+        getItem("Report", "10", <SnippetsFilled />),
+        getItem("Settings", "11", <SettingFilled />),
+      ],
       "group"
     ),
   ]),
-
-  getItem("Navigation Two", "sub2", <AppstoreOutlined />, [
-    getItem("Option 5", "5"),
-    getItem("Option 6", "6"),
-    getItem("Submenu", "sub3", null, [
-      getItem("Option 7", "7"),
-      getItem("Option 8", "8"),
-    ]),
-  ]),
-
-  { type: "divider" },
-
-  getItem("Navigation Three", "sub4", <SettingOutlined />, [
-    getItem("Option 9", "9"),
-    getItem("Option 10", "10"),
-    getItem("Option 11", "11"),
-    getItem("Option 12", "12"),
-  ]),
-
-  getItem(
-    "Group",
-    "grp",
-    null,
-    [getItem("Option 13", "13"), getItem("Option 14", "14")],
-    "group"
-  ),
 ];
 
 const MenuApp: React.FC = () => {

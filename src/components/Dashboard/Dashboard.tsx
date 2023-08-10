@@ -1,6 +1,16 @@
 import React from "react";
-import { ArrowUpOutlined } from "@ant-design/icons";
-import { Select, Progress, Statistic, Row, Col, Card } from "antd";
+import { ArrowUpOutlined, MoreOutlined } from "@ant-design/icons";
+import {
+  Select,
+  Progress,
+  Statistic,
+  Row,
+  Col,
+  Card,
+  List,
+  Avatar,
+  Tag,
+} from "antd";
 import styles from "../Dashboard/Dashboard.module.css";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
@@ -9,6 +19,36 @@ export const Dashboard = () => {
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
   };
+
+  const ListData = [
+    {
+      title: "Jhon Stiv",
+    },
+    {
+      title: "Mark Andry",
+    },
+    {
+      title: "Bill Bros",
+    },
+    {
+      title: "Lay Bronson",
+    },
+  ];
+
+  const CalendarData = [
+    {
+      title: "Interview",
+      day: "10",
+    },
+    {
+      title: "Organizational meeting",
+      day: "08",
+    },
+    {
+      title: "Meeting with the manager",
+      day: "11",
+    },
+  ];
 
   const options = {
     chart: {
@@ -152,52 +192,112 @@ export const Dashboard = () => {
         </Card>
       </div>
       <HighchartsReact highcharts={Highcharts} options={options} />
-      <Row>
-        <Col span={12}>
-          <Card>
-            <div className={styles.cardSelectCont}>
-              <h3>Activity Feed</h3>
-              <Select
-                defaultValue="All Activity"
-                style={{ width: 120 }}
-                onChange={handleChange}
-                options={[
-                  { value: "All Activity", label: "All Activity" },
-                  { value: "All Activity", label: "All Activity" },
-                  { value: "Yiminghe", label: "yiminghe" },
-                  {
-                    value: "disabled",
-                    label: "Disabled",
-                    disabled: true,
-                  },
-                ]}
+      <div style={{ marginTop: "25px" }}>
+        <Row gutter={[30, 0]}>
+          <Col span={14}>
+            <Card>
+              <div className={styles.cardSelectCont}>
+                <h3>Activity Feed</h3>
+                <Select
+                  defaultValue="All Activity"
+                  style={{ width: 120 }}
+                  onChange={handleChange}
+                  options={[
+                    { value: "All Activity", label: "All Activity" },
+                    { value: "All Activity", label: "All Activity" },
+                    { value: "Yiminghe", label: "yiminghe" },
+                    {
+                      value: "disabled",
+                      label: "Disabled",
+                      disabled: true,
+                    },
+                  ]}
+                />
+              </div>
+              <List
+                style={{ marginTop: 20 }}
+                size="small"
+                itemLayout="horizontal"
+                dataSource={ListData}
+                renderItem={(item, index) => (
+                  <List.Item>
+                    <List.Item.Meta
+                      avatar={
+                        <Avatar
+                          src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
+                        />
+                      }
+                      title={<a href="https://ant.design">{item.title}</a>}
+                      description="Что-то там сделал, но что не ясно"
+                    />
+                    <Tag color="blue">Applying</Tag>
+                  </List.Item>
+                )}
               />
-            </div>
-          </Card>
-        </Col>
-        <Col span={12}>
-          <Card>
-            <div className={styles.cardSelectCont}>
-              <h3>Meetings</h3>
-              <Select
-                defaultValue="Create now"
-                style={{ width: 120 }}
-                onChange={handleChange}
-                options={[
-                  { value: "All Activity", label: "All Activity" },
-                  { value: "All Activity", label: "All Activity" },
-                  { value: "Yiminghe", label: "yiminghe" },
-                  {
-                    value: "disabled",
-                    label: "Disabled",
-                    disabled: true,
-                  },
-                ]}
+            </Card>
+          </Col>
+          <Col span={10}>
+            <Card>
+              <div className={styles.cardSelectCont}>
+                <h3>Meetings</h3>
+                <Select
+                  defaultValue="Create now"
+                  style={{ width: 120 }}
+                  onChange={handleChange}
+                  options={[
+                    { value: "All Activity", label: "All Activity" },
+                    { value: "All Activity", label: "All Activity" },
+                    { value: "Yiminghe", label: "yiminghe" },
+                    {
+                      value: "disabled",
+                      label: "Disabled",
+                      disabled: true,
+                    },
+                  ]}
+                />
+              </div>
+              <List
+                style={{ marginTop: 20 }}
+                size="small"
+                itemLayout="horizontal"
+                dataSource={CalendarData}
+                renderItem={(item, index) => (
+                  <List.Item>
+                    <List.Item.Meta
+                      avatar={
+                        <div
+                          style={{
+                            textAlign: "center",
+                            fontWeight: "bold",
+                            boxShadow: "0px 2px 8px 0px rgba(0, 0, 0, 0.1)",
+                            borderRadius: "5px",
+                            height: 40,
+                            width: 40,
+                          }}
+                        >
+                          <h4 style={{ color: "#f0b71c" }}>Feb</h4>
+                          <p>{item.day}</p>
+                        </div>
+                      }
+                      title={<a href="https://ant.design">{item.title}</a>}
+                      description="9:00 am - 11:30 am"
+                    />
+                    <MoreOutlined
+                      style={{
+                        cursor: "pointer",
+                        fontSize: 25,
+                        backgroundColor: "#f3f3f3ed",
+                        color: "#797979",
+                        borderRadius: "5px",
+                      }}
+                    />
+                  </List.Item>
+                )}
               />
-            </div>
-          </Card>
-        </Col>
-      </Row>
+            </Card>
+          </Col>
+        </Row>
+      </div>
     </>
   );
 };

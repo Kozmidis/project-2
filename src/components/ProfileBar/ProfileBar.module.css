@@ -15,5 +15,11 @@
 .profileBarTitle {
   align-self: start;
 
-  margin: 15px;
+  margin: 15px 0;
+}
+
+.profileIconContainer {
+  align-self: flex-end;
+  display: flex;
+  margin: 11px 0 63px;
 }

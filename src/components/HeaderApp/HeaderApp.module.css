@@ -1,3 +1,5 @@
 .text {
   line-height: 21px;
+  max-height: max-content;
+  padding: 4px;
 }

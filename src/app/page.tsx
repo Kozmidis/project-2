@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { UserOutlined } from "@ant-design/icons";
 import { Layout, Row, Avatar, Col, Card } from "antd";
 import MenuApp from "@/components/MenuApp/MenuApp";
 import styles from "../app/page.module.css";
@@ -11,7 +10,7 @@ import { HeaderApp } from "@/components/HeaderApp/HeaderApp";
 const { Header, Content } = Layout;
 
 const headerStyle: React.CSSProperties = {
-  height: 64,
+  height: "max-content",
   paddingInline: 50,
   padding: 15,
   lineHeight: "64px",
