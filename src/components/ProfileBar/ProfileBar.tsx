@@ -2,14 +2,13 @@ import styles from "../ProfileBar/ProfileBar.module.css";
 
 import {
   UserOutlined,
-  BellFilled,
-  QuestionCircleFilled,
   SkypeFilled,
   CodepenSquareFilled,
   YoutubeFilled,
   GithubFilled,
 } from "@ant-design/icons";
-import { Avatar, Card, Badge, Row, Col } from "antd";
+import { Avatar, Card } from "antd";
+import { IconContainer } from "../IconContainer/IconContainer";
 
 const cardStyle: React.CSSProperties = {
   width: "100%",
@@ -22,23 +21,7 @@ export const ProfileBar = () => {
   return (
     <>
       <div className={styles.profileBar}>
-        <div className={styles.profileIconContainer}>
-          <Row gutter={[5, 5]}>
-            <Col>
-              <QuestionCircleFilled
-                style={{ color: "#c7c7c7", fontSize: "23px" }}
-              />
-            </Col>
-            <Col>
-              <Badge size="small" count={5}>
-                <BellFilled style={{ color: "#c7c7c7", fontSize: "23px" }} />
-              </Badge>
-            </Col>
-            <Col>
-              <Avatar size={23} icon={<UserOutlined />} />
-            </Col>
-          </Row>
-        </div>
+        <IconContainer />
         <Avatar size={64} icon={<UserOutlined />} />
         <h2 className={styles.profileBarItem}>User</h2>
         <p>directory...</p>

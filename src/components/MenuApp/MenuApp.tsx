@@ -13,6 +13,7 @@ import {
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
+import Link from "next/link";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -39,7 +40,11 @@ const items: MenuProps["items"] = [
       "g1",
       null,
       [
-        getItem("Dashboard", "1", <AppstoreFilled />),
+        getItem(
+          <Link href="/dashboard">Dashboard</Link>,
+          "/dashboard",
+          <AppstoreFilled />
+        ),
         getItem("Message", "2", <MessageFilled />),
         getItem("Calendar", "3", <CalendarFilled />),
       ],
@@ -50,8 +55,8 @@ const items: MenuProps["items"] = [
       "g2",
       null,
       [
-        getItem("Jobs", "4", <WalletFilled />),
-        getItem("Cadidates", "5", <MehFilled />),
+        getItem(<Link href="/jobs">Jobs</Link>, "/jobs", <WalletFilled />),
+        getItem("Cadidates", "/cadidates", <MehFilled />),
         getItem("My Referals", "6", <SignalFilled />),
         getItem("Career Site", "7", <FolderOpenFilled />),
       ],
@@ -72,7 +77,11 @@ const items: MenuProps["items"] = [
   ]),
 ];
 
-const MenuApp: React.FC = () => {
+type MenuAppProps = {
+  pathName: string;
+};
+
+const MenuApp: React.FC<MenuAppProps> = ({ pathName }) => {
   const onClick: MenuProps["onClick"] = (e) => {
     console.log("click ", e);
   };
@@ -81,7 +90,7 @@ const MenuApp: React.FC = () => {
     <Menu
       onClick={onClick}
       style={{ width: "100%" }}
-      defaultSelectedKeys={["1"]}
+      defaultSelectedKeys={[pathName]}
       defaultOpenKeys={["sub1"]}
       mode="inline"
       items={items}

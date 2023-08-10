@@ -1,7 +1,8 @@
 import { Input, Row, Col } from "antd";
 import styles from "../HeaderApp/HeaderApp.module.css";
+import { IconContainer } from "../IconContainer/IconContainer";
 
-export const HeaderApp = () => {
+export const HeaderApp = ({ pathName }: { pathName: string }) => {
   const { Search } = Input;
 
   const onSearch = (value: string) => console.log(value);
@@ -14,17 +15,28 @@ export const HeaderApp = () => {
             justifyItems: "center",
             flexDirection: "column",
           }}
-          span={16}
+          span={12}
         >
-          <h2 className={styles.text}>Dashboard</h2>
-          <p className={styles.text}>Hello, User! Welcome to Galucter</p>
+          {pathName === "/dashboard" && (
+            <>
+              <h2 className={styles.text}>Dashboard</h2>
+              <p className={styles.text}>Hello, User! Welcome to Galucter</p>
+            </>
+          )}
         </Col>
-        <Col style={{ display: "flex", alignItems: "center" }} span={8}>
+        <Col
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+          span={12}
+        >
           <Search
             placeholder="Search by anything"
             onSearch={onSearch}
             enterButton
           />
+          {pathName !== "/dashboard" && <IconContainer />}
         </Col>
       </Row>
     </>
