@@ -2,7 +2,7 @@
 import React from "react";
 import { DownOutlined } from "@ant-design/icons";
 import type { MenuProps, TabsProps } from "antd";
-import { Dropdown, Space, Tabs } from "antd";
+import { Dropdown, Space, Tabs, Tag } from "antd";
 
 const Jobs = () => {
   const onChange = (key: string) => {
@@ -12,18 +12,33 @@ const Jobs = () => {
   const itemsTabs: TabsProps["items"] = [
     {
       key: "1",
-      label: `Active jobs`,
+      label: (
+        <div style={{ display: "flex", gap: 4 }}>
+          <p>Active jobs</p>
+          <Tag color="blue">07</Tag>
+        </div>
+      ),
       children: `Content of Tab Pane 1`,
     },
     {
       key: "2",
-      label: `Complited`,
+      label: (
+        <div style={{ display: "flex", gap: 4 }}>
+          <p>Completed</p>
+          <Tag color="blue">57</Tag>
+        </div>
+      ),
       children: `Complited`,
     },
     {
       key: "3",
-      label: `Unfinished`,
-      children: `Content of Tab Pane 3`,
+      label: (
+        <div style={{ display: "flex", gap: 4 }}>
+          <p>Unfinished</p>
+          <Tag color="blue">32</Tag>
+        </div>
+      ),
+      children: <>123</>,
     },
   ];
 
