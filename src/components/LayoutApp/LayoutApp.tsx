@@ -5,7 +5,6 @@ import MenuApp from "@/components/MenuApp/MenuApp";
 import { ProfileBar } from "@/components/ProfileBar/ProfileBar";
 import { HeaderApp } from "@/components/HeaderApp/HeaderApp";
 import { usePathname } from "next/navigation";
-import { ProviderStore } from "@/Redux/Store/ProviderStore";
 
 const { Header, Content } = Layout;
 
@@ -32,9 +31,7 @@ export default function LayoutApp({ children }: { children: React.ReactNode }) {
             <Header style={headerStyle}>
               <HeaderApp pathName={pathName} />
             </Header>
-            <Content style={{ padding: "20px" }}>
-              <ProviderStore>{children}</ProviderStore>
-            </Content>
+            <Content style={{ padding: "20px" }}>{children}</Content>
           </Layout>
         </Col>
         {pathName === "/dashboard" && (
