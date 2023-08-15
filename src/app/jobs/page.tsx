@@ -3,6 +3,8 @@ import React from "react";
 import { DownOutlined } from "@ant-design/icons";
 import type { MenuProps, TabsProps } from "antd";
 import { Dropdown, Space, Tabs, Tag } from "antd";
+import store from "@/Redux/store/store";
+import Cards from "@/Redux/Cards";
 
 const Jobs = () => {
   const onChange = (key: string) => {
@@ -18,7 +20,7 @@ const Jobs = () => {
           <Tag color="blue">07</Tag>
         </div>
       ),
-      children: `Content of Tab Pane 1`,
+      children: <Cards store={store}></Cards>,
     },
     {
       key: "2",
@@ -28,7 +30,7 @@ const Jobs = () => {
           <Tag color="blue">57</Tag>
         </div>
       ),
-      children: `Complited`,
+      children: <Cards store={store}></Cards>,
     },
     {
       key: "3",
@@ -38,7 +40,7 @@ const Jobs = () => {
           <Tag color="blue">32</Tag>
         </div>
       ),
-      children: <>123</>,
+      children: <Cards store={store}></Cards>,
     },
   ];
 
