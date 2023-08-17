@@ -15,7 +15,7 @@ export const initialState = [
     spec: "Design",
     subTitle: "Dhaka, Bangladesh",
     text: "Prosto text, bez ogromnogo smisla",
-    cardType: "active",
+    cardType: "ACTIVE",
     logo: (
       <SlackOutlined
         style={{
@@ -35,7 +35,7 @@ export const initialState = [
     spec: "Marketing",
     subTitle: "Dhaka, Bangladesh",
     text: "Prosto text, bez ogromnogo smisla",
-    cardType: "active",
+    cardType: "ACTIVE",
     logo: (
       <SkypeOutlined
         style={{
@@ -55,7 +55,7 @@ export const initialState = [
     spec: "Developer",
     subTitle: "Dhaka, Bangladesh",
     text: "Prosto text, bez ogromnogo smisla",
-    cardType: "active",
+    cardType: "ACTIVE",
     logo: (
       <YoutubeOutlined
         style={{
@@ -75,7 +75,7 @@ export const initialState = [
     spec: "Developer",
     subTitle: "Dhaka, Bangladesh",
     text: "Prosto text, bez ogromnogo smisla",
-    cardType: "completed",
+    cardType: "COMPLETED",
     logo: (
       <IeOutlined
         style={{
@@ -95,7 +95,7 @@ export const initialState = [
     spec: "Marketing",
     subTitle: "Dhaka, Bangladesh",
     text: "Prosto text, bez Marketing Marketing",
-    cardType: "unfinished",
+    cardType: "UNFINISHED",
     logo: (
       <AndroidOutlined
         style={{
@@ -115,7 +115,7 @@ export const initialState = [
     spec: "Developer",
     subTitle: "Dhaka, Bangladesh",
     text: "Prosto text, bez Developer Marketing",
-    cardType: "unfinished",
+    cardType: "UNFINISHED",
     logo: (
       <TwitterOutlined
         style={{
@@ -133,7 +133,42 @@ export const initialState = [
 
 const reduser = (state = initialState, action: string) => {
   console.log("reduser > ", action);
-  return state;
+
+  const cards = [];
+  switch (action.type) {
+    case "ACTIVE":
+      state = initialState;
+      state.map((item) => {
+        if (item.cardType === "ACTIVE") {
+          cards.push(item);
+        }
+        state = cards;
+      });
+      // console.log("ACTIVE state", state);
+      return state;
+    case "COMPLETED":
+      state = initialState;
+      state.map((item) => {
+        if (item.cardType === "COMPLETED") {
+          cards.push(item);
+        }
+        state = cards;
+      });
+      // console.log("COMPLETED state", state);
+      return state;
+    case "UNFINISHED":
+      state = initialState;
+      state.map((item) => {
+        if (item.cardType === "UNFINISHED") {
+          cards.push(item);
+        }
+        state = cards;
+      });
+      // console.log("UNFINISHED state", state);
+      return state;
+    default:
+      return state;
+  }
 };
 
 const store = createStore(reduser);
