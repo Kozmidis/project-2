@@ -26,7 +26,7 @@ export const initialState = [
         }}
       />
     ),
-    date: "new Date()",
+    date: new Date(2023, 7, 15),
     candidates: "122+ candidates",
   },
   {
@@ -46,7 +46,7 @@ export const initialState = [
         }}
       />
     ),
-    date: "8 July",
+    date: new Date(2023, 7, 9),
     candidates: "201+ candidates",
   },
   {
@@ -66,7 +66,7 @@ export const initialState = [
         }}
       />
     ),
-    date: "10 July",
+    date: new Date(2023, 7, 4),
     candidates: "60+ candidates",
   },
   {
@@ -86,7 +86,7 @@ export const initialState = [
         }}
       />
     ),
-    date: "4 July",
+    date: new Date(2023, 7, 3),
     candidates: "322+ candidates",
   },
   {
@@ -106,7 +106,7 @@ export const initialState = [
         }}
       />
     ),
-    date: "3 July",
+    date: new Date(2023, 7, 12),
     candidates: "344+ candidates",
   },
   {
@@ -126,7 +126,7 @@ export const initialState = [
         }}
       />
     ),
-    date: "4 July",
+    date: new Date(2023, 7, 10),
     candidates: "12+ candidates",
   },
 ];
@@ -134,7 +134,7 @@ export const initialState = [
 const reduser = (state = initialState, action: string) => {
   console.log("reduser > ", action);
 
-  const cards = [];
+  const cards: any[] = [];
   switch (action.type) {
     case "ACTIVE":
       state = initialState;
@@ -167,6 +167,14 @@ const reduser = (state = initialState, action: string) => {
       // console.log("UNFINISHED state", state);
       return state;
     default:
+      state = initialState;
+      state.map((item) => {
+        if (item.cardType === "ACTIVE") {
+          cards.push(item);
+        }
+        state = cards;
+      });
+      // console.log("ACTIVE state", state);
       return state;
   }
 };

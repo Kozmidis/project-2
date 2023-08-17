@@ -219,6 +219,16 @@ function mapDispatchToProps(dispatch: any) {
       const action = { type: "UNFINISHED" };
       dispatch(action);
     },
+    ascDate: () => {
+      console.log("asc click");
+      const action = { type: "SORT_DATE_ASC" };
+      dispatch(action);
+    },
+    descDate: () => {
+      console.log("desc click");
+      const action = { type: "SORT_DATE_DESK" };
+      dispatch(action);
+    },
   };
 }
 
