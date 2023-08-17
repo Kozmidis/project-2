@@ -38,7 +38,7 @@ function Cards(props: any) {
       label: (
         <div style={{ display: "flex", gap: 4 }}>
           <p>Active jobs</p>
-          <Tag color="blue">{props.state.length}</Tag>
+          <Tag color="blue">3</Tag>
         </div>
       ),
       children: (
@@ -90,7 +90,7 @@ function Cards(props: any) {
       label: (
         <div style={{ display: "flex", gap: 4 }}>
           <p>Completed</p>
-          <Tag color="blue">{props.state.length}</Tag>
+          <Tag color="blue">1</Tag>
         </div>
       ),
       children: (
@@ -142,7 +142,7 @@ function Cards(props: any) {
       label: (
         <div style={{ display: "flex", gap: 4 }}>
           <p>Unfinished</p>
-          <Tag color="blue">{props.state.length}</Tag>
+          <Tag color="blue">2</Tag>
         </div>
       ),
       children: (

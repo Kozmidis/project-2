@@ -162,6 +162,7 @@ const reduser = (state = initialState, action: string) => {
         if (item.cardType === "UNFINISHED") {
           cards.push(item);
         }
+
         state = cards;
       });
       // console.log("UNFINISHED state", state);
