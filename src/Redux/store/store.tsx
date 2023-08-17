@@ -166,6 +166,18 @@ const reduser = (state = initialState, action: string) => {
       });
       // console.log("UNFINISHED state", state);
       return state;
+    case "SORT_DATE_ASC":
+      const ascState = state.slice().sort(function (a, b) {
+        console.log("asc", state);
+        return a.date - b.date;
+      });
+      return (state = ascState);
+    case "SORT_DATE_DESC":
+      const descState = state.slice().sort(function (a, b) {
+        console.log("DESC", state);
+        return b.date - a.date;
+      });
+      return (state = descState);
     default:
       state = initialState;
       state.map((item) => {

@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import { CardApp } from "./CardApp";
-import type { TabsProps } from "antd";
-
-import { Tabs, Tag } from "antd";
-import { contentQuotesLinter } from "@ant-design/cssinjs/lib/linters";
+import type { TabsProps, MenuProps } from "antd";
+import { CalendarFilled } from "@ant-design/icons";
+import { Dropdown, Space, Tabs, Tag } from "antd";
+import { genComponentStyleHook } from "antd/es/theme/internal";
 
 export type CardsType = {
   id: number;
@@ -190,8 +190,42 @@ function Cards(props: any) {
       ),
     },
   ];
+
+  const onClick: MenuProps["onClick"] = ({ key }) => {
+    if (key === "1") {
+      props.ascDate();
+      console.log(`asc ${key}`);
+    }
+    if (key === "2") {
+      props.descDate();
+      console.log(`desc ${key}`);
+    }
+  };
+
+  const items: MenuProps["items"] = [
+    {
+      label: "Asc",
+      key: "1",
+    },
+    {
+      label: "Decs",
+      key: "2",
+    },
+  ];
   return (
     <>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <h2>Jobs</h2>
+        <Dropdown menu={{ items, onClick }}>
+          <a onClick={(e) => e.preventDefault()}>
+            <Space>
+              <p style={{ color: "#a0a0a0", fontWeight: "500" }}>Sort by: </p>
+              Createon Date
+              <CalendarFilled />
+            </Space>
+          </a>
+        </Dropdown>
+      </div>
       <Tabs defaultActiveKey="1" items={itemsTabs} onChange={onChange} />
     </>
   );
@@ -226,7 +260,7 @@ function mapDispatchToProps(dispatch: any) {
     },
     descDate: () => {
       console.log("desc click");
-      const action = { type: "SORT_DATE_DESK" };
+      const action = { type: "SORT_DATE_DESC" };
       dispatch(action);
     },
   };
