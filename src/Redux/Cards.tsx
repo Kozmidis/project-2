@@ -1,9 +1,8 @@
 import { connect } from "react-redux";
-import { CardApp } from "./CardApp";
 import type { TabsProps, MenuProps } from "antd";
 import { CalendarFilled } from "@ant-design/icons";
 import { Dropdown, Space, Tabs, Tag } from "antd";
-import { genComponentStyleHook } from "antd/es/theme/internal";
+import { TabCards } from "@/components/TabCards/TabCards";
 
 export type CardsType = {
   id: number;
@@ -41,49 +40,7 @@ function Cards(props: any) {
           <Tag color="blue">3</Tag>
         </div>
       ),
-      children: (
-        <div
-          style={{
-            display: "grid",
-            gap: 15,
-            gridTemplateColumns:
-              "max-content max-content max-content max-content",
-            height: "calc(100vh - 230px)",
-            gridAutoRows: " min-content",
-            gridAutoColumns: " min-content",
-          }}
-        >
-          {props.state.map((item: CardsType) => (
-            <CardApp key={item.id} {...item} />
-          ))}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "300px",
-              height: "300px",
-              border: "dashed #b4b4b4",
-              cursor: "pointer",
-              color: "#5ec954",
-              textAlign: "center",
-            }}
-          >
-            <div>
-              <p
-                style={{
-                  fontSize: 50,
-                  height: "min-content",
-                }}
-              >
-                +
-              </p>
-              <h3>Create New Job</h3>
-            </div>
-          </div>
-        </div>
-      ),
+      children: <TabCards {...props} />,
     },
     {
       key: "2",
@@ -93,49 +50,7 @@ function Cards(props: any) {
           <Tag color="blue">1</Tag>
         </div>
       ),
-      children: (
-        <div
-          style={{
-            display: "grid",
-            gap: 15,
-            gridTemplateColumns:
-              "max-content max-content max-content max-content",
-            height: "calc(100vh - 230px)",
-            gridAutoRows: " min-content",
-            gridAutoColumns: " min-content",
-          }}
-        >
-          {props.state.map((item: CardsType) => (
-            <CardApp key={item.id} {...item} />
-          ))}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "300px",
-              height: "300px",
-              border: "dashed #b4b4b4",
-              cursor: "pointer",
-              color: "#5ec954",
-              textAlign: "center",
-            }}
-          >
-            <div>
-              <p
-                style={{
-                  fontSize: 50,
-                  height: "min-content",
-                }}
-              >
-                +
-              </p>
-              <h3>Create New Job</h3>
-            </div>
-          </div>
-        </div>
-      ),
+      children: <TabCards {...props} />,
     },
     {
       key: "3",
@@ -145,49 +60,7 @@ function Cards(props: any) {
           <Tag color="blue">2</Tag>
         </div>
       ),
-      children: (
-        <div
-          style={{
-            display: "grid",
-            gap: 15,
-            gridTemplateColumns:
-              "max-content max-content max-content max-content",
-            height: "calc(100vh - 230px)",
-            gridAutoRows: " min-content",
-            gridAutoColumns: " min-content",
-          }}
-        >
-          {props.state.map((item: CardsType) => (
-            <CardApp key={item.id} {...item} />
-          ))}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "300px",
-              height: "300px",
-              border: "dashed #b4b4b4",
-              cursor: "pointer",
-              color: "#5ec954",
-              textAlign: "center",
-            }}
-          >
-            <div>
-              <p
-                style={{
-                  fontSize: 50,
-                  height: "min-content",
-                }}
-              >
-                +
-              </p>
-              <h3>Create New Job</h3>
-            </div>
-          </div>
-        </div>
-      ),
+      children: <TabCards {...props} />,
     },
   ];
 
@@ -239,27 +112,22 @@ function mapStateToProps(state: CardsType) {
 function mapDispatchToProps(dispatch: any) {
   return {
     onActiveCards: () => {
-      console.log("active");
       const action = { type: "ACTIVE" };
       dispatch(action);
     },
     onCompletedCards: () => {
-      console.log("completed");
       const action = { type: "COMPLETED" };
       dispatch(action);
     },
     onUnfinishedCards: () => {
-      console.log("unfinished");
       const action = { type: "UNFINISHED" };
       dispatch(action);
     },
     ascDate: () => {
-      console.log("asc click");
       const action = { type: "SORT_DATE_ASC" };
       dispatch(action);
     },
     descDate: () => {
-      console.log("desc click");
       const action = { type: "SORT_DATE_DESC" };
       dispatch(action);
     },

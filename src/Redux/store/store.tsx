@@ -145,7 +145,7 @@ const reduser = (state = initialState, action: string) => {
         state = cards;
       });
       // console.log("ACTIVE state", state);
-      return state;
+      return [...state];
     case "COMPLETED":
       state = initialState;
       state.map((item) => {
@@ -155,7 +155,7 @@ const reduser = (state = initialState, action: string) => {
         state = cards;
       });
       // console.log("COMPLETED state", state);
-      return state;
+      return [...state];
     case "UNFINISHED":
       state = initialState;
       state.map((item) => {
@@ -166,7 +166,7 @@ const reduser = (state = initialState, action: string) => {
         state = cards;
       });
       // console.log("UNFINISHED state", state);
-      return state;
+      return [...state];
     case "SORT_DATE_ASC":
       const ascState = state.slice().sort(function (a, b) {
         console.log("asc", state);
