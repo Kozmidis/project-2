@@ -2,25 +2,83 @@
 import React, { useState, useEffect } from "react";
 import Candidates from "@/components/Candidates/Candidates";
 import { FilterFilled } from "@ant-design/icons";
-import { Button } from "antd";
+import { Button, Dropdown, DatePicker, Checkbox } from "antd";
+import type { MenuProps } from "antd";
+import type { CheckboxValueType } from "antd/es/checkbox/Group";
+
+const CheckboxGroup = Checkbox.Group;
+
+const plainOptions = ["Male", "Female"];
+const defaultCheckedList = ["Male", "Female"];
 
 export default function CandidatesPage() {
+  const [open, setOpen] = useState(false);
+
   const [apiState, setApiState] = useState([]);
   useEffect(() => {
     async function api() {
-      await fetch(`https://fakerapi.it/api/v1/persons?_locale=fr_FR`).then(
-        async (res) => {
-          const data = await res.json();
-          console.log(data.data);
-          setApiState(data.data);
-        }
-      );
+      await fetch(
+        `https://fakerapi.it/api/v1/persons?_gender=&_locale=fr_FR`
+      ).then(async (res) => {
+        const data = await res.json();
+        console.log(data.data);
+        setApiState(data.data);
+      });
     }
     api();
   }, []);
 
+  //Date
+  const { RangePicker } = DatePicker;
+
+  //Фильтр ЧЕКБОКСЫ
+  const [checkedList, setCheckedList] =
+    useState<CheckboxValueType[]>(defaultCheckedList);
+
+  const onChange = (list: CheckboxValueType[]) => {
+    setCheckedList(list);
+  };
+
+  const items: MenuProps["items"] = [
+    {
+      label: (
+        <>
+          <h3 style={{ textAlign: "center", paddingBottom: 5 }}>Gender</h3>
+          <CheckboxGroup
+            style={{ display: "flex", justifyContent: "center" }}
+            options={plainOptions}
+            value={checkedList}
+            onChange={onChange}
+          />
+        </>
+      ),
+      key: "0",
+    },
+    {
+      type: "divider",
+    },
+    {
+      label: (
+        <>
+          <h3 style={{ textAlign: "center", paddingBottom: 5 }}>Dates</h3>
+          <RangePicker />
+        </>
+      ),
+      key: "1",
+    },
+  ];
+
+  const handleMenuClick: MenuProps["onClick"] = (e) => {
+    if (e.key === "2") {
+      setOpen(false);
+    }
+  };
+  const handleOpenChange = (flag: boolean) => {
+    setOpen(flag);
+  };
+
   return (
-    <>
+    <div style={{ paddingBottom: 177 }}>
       <div
         style={{
           display: "flex",
@@ -48,15 +106,26 @@ export default function CandidatesPage() {
             Total Candidates
           </p>
         </div>
-        <Button
-          style={{ color: "#aaaaaa" }}
-          icon={<FilterFilled style={{ color: "#aaaaaa" }} />}
+        <Dropdown
+          menu={{
+            items,
+            onClick: handleMenuClick,
+          }}
+          onOpenChange={handleOpenChange}
+          open={open}
         >
-          Filter
-        </Button>
+          {/* <a onClick={(e) => e.preventDefault()}> */}
+          <Button
+            style={{ color: "#aaaaaa" }}
+            icon={<FilterFilled style={{ color: "#aaaaaa" }} />}
+          >
+            Filter
+          </Button>
+          {/* </a> */}
+        </Dropdown>
       </div>
 
       <Candidates data={apiState} />
-    </>
+    </div>
   );
 }
