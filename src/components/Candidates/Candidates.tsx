@@ -1,14 +1,150 @@
 "use client";
-import React from "react";
+import React, { FC, useState, useEffect } from "react";
+import { connect } from "react-redux";
 import { Avatar, List } from "antd";
 import { SwapOutlined } from "@ant-design/icons";
+import { FilterFilled } from "@ant-design/icons";
+import { Button, Dropdown, DatePicker, Checkbox } from "antd";
+import type { MenuProps } from "antd";
+import type { CheckboxValueType } from "antd/es/checkbox/Group";
 
-export default function Candidates({ data }) {
+const CheckboxGroup = Checkbox.Group;
+
+const plainOptions = ["Male", "Female"];
+const defaultCheckedList = ["Male", "Female"];
+
+const Candidates: FC = () => {
   const position = "bottom";
   const align = "center";
 
+  function getAge(dateString: string) {
+    var today = new Date();
+    var birthDate = new Date(dateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  }
+  const [open, setOpen] = useState(false);
+
+  async function api() {
+    await fetch(
+      `https://fakerapi.it/api/v1/persons?_quantity=50&_birthday_start=1980-01-01&_birthday_end=2000-01-01&_gender=&_locale=fr_FR`
+    ).then(async (res) => {
+      const data = await res.json();
+      console.log(data.data);
+      setApiState(data.data);
+    });
+  }
+  const [apiState, setApiState] = useState([]);
+  useEffect(() => {
+    api();
+  }, []);
+
+  //Date
+  const { RangePicker } = DatePicker;
+
+  //Фильтр ЧЕКБОКСЫ
+  const [checkedList, setCheckedList] =
+    useState<CheckboxValueType[]>(defaultCheckedList);
+
+  const onChange = (list: CheckboxValueType[]) => {
+    setCheckedList(list);
+    api();
+  };
+
+  const items: MenuProps["items"] = [
+    {
+      label: (
+        <>
+          <h3 style={{ textAlign: "center", paddingBottom: 5 }}>Gender</h3>
+          <CheckboxGroup
+            style={{ display: "flex", justifyContent: "center" }}
+            options={plainOptions}
+            value={checkedList}
+            onChange={onChange}
+          />
+        </>
+      ),
+      key: "0",
+    },
+    {
+      type: "divider",
+    },
+    {
+      label: (
+        <>
+          <h3 style={{ textAlign: "center", paddingBottom: 5 }}>Dates</h3>
+          <RangePicker
+            onChange={(e) => {
+              console.log(e);
+            }}
+          />
+        </>
+      ),
+      key: "1",
+    },
+  ];
+
+  const handleMenuClick: MenuProps["onClick"] = (e) => {
+    if (e.key === "2") {
+      setOpen(false);
+    }
+  };
+  const handleOpenChange = (flag: boolean) => {
+    setOpen(flag);
+  };
+
   return (
     <>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 30,
+        }}
+      >
+        <div>
+          <h2
+            style={{
+              fontSize: 21,
+            }}
+          >
+            Candidates
+          </h2>
+          <p
+            style={{
+              color: "#aaaaaa",
+              letterSpacing: "0.5px",
+              marginTop: 8,
+              fontSize: 17,
+            }}
+          >
+            Total Candidates
+          </p>
+        </div>
+        <Dropdown
+          menu={{
+            items,
+            onClick: handleMenuClick,
+          }}
+          onOpenChange={handleOpenChange}
+          open={open}
+        >
+          {/* <a onClick={(e) => e.preventDefault()}> */}
+          <Button
+            style={{ color: "#aaaaaa" }}
+            icon={<FilterFilled style={{ color: "#aaaaaa" }} />}
+          >
+            Filter
+          </Button>
+          {/* </a> */}
+        </Dropdown>
+      </div>
+
       <div
         style={{
           display: "grid",
@@ -56,8 +192,8 @@ export default function Candidates({ data }) {
           align,
           pageSize: 5,
         }}
-        dataSource={data}
-        renderItem={(item, index) => (
+        dataSource={apiState}
+        renderItem={(item: any, index) => (
           <List.Item>
             <List.Item.Meta
               style={{ display: "flex", alignItems: "center" }}
@@ -85,9 +221,9 @@ export default function Candidates({ data }) {
                     </span>
                   </p>
                   <p>
-                    Birthday:{" "}
+                    Age:{" "}
                     <span style={{ fontWeight: "bold", color: "black" }}>
-                      {item.birthday}
+                      {getAge(item.birthday)}
                     </span>
                   </p>
                   <p>
@@ -104,4 +240,10 @@ export default function Candidates({ data }) {
       />
     </>
   );
+};
+function mapStateToProps({ candidates }: any) {
+  console.log("CandidatesmapStateToProps >", candidates);
+  return { candidates };
 }
+
+export default connect(mapStateToProps)(Candidates);

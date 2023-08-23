@@ -13,7 +13,7 @@ export const TabCards = (props: any) => {
         gridAutoColumns: " min-content",
       }}
     >
-      {props.state.map((item: CardsType) => (
+      {props.jobs.map((item: CardsType) => (
         <CardApp key={item.id} {...item} />
       ))}
       <div

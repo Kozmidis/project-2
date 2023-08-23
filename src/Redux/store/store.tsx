@@ -1,4 +1,5 @@
-import { createStore } from "redux";
+import { combineReducers, createStore } from "redux";
+import { candidatesReduser } from "./redusers/candidates";
 import {
   SlackOutlined,
   SkypeOutlined,
@@ -7,6 +8,28 @@ import {
   AndroidOutlined,
   TwitterOutlined,
 } from "@ant-design/icons";
+
+interface ActionActive {
+  type: "ACTIVE";
+}
+interface ActionCompleted {
+  type: "COMPLETED";
+}
+interface ActionUnfinished {
+  type: "UNFINISHED";
+}
+interface ActionSortDateAsc {
+  type: "SORT_DATE_ASC";
+}
+interface ActionSortDateDesc {
+  type: "SORT_DATE_DESC";
+}
+type Action =
+  | ActionActive
+  | ActionCompleted
+  | ActionUnfinished
+  | ActionSortDateAsc
+  | ActionSortDateDesc;
 
 export const initialState = [
   {
@@ -131,7 +154,7 @@ export const initialState = [
   },
 ];
 
-const reduser = (state = initialState, action: string) => {
+const jobsReduser = (state = initialState, action: Action) => {
   console.log("reduser > ", action);
 
   const cards: any[] = [];
@@ -168,13 +191,13 @@ const reduser = (state = initialState, action: string) => {
       // console.log("UNFINISHED state", state);
       return [...state];
     case "SORT_DATE_ASC":
-      const ascState = state.slice().sort(function (a, b) {
+      const ascState = state.slice().sort(function (a: any, b: any) {
         console.log("asc", state);
         return a.date - b.date;
       });
       return (state = ascState);
     case "SORT_DATE_DESC":
-      const descState = state.slice().sort(function (a, b) {
+      const descState = state.slice().sort(function (a: any, b: any) {
         console.log("DESC", state);
         return b.date - a.date;
       });
@@ -192,6 +215,8 @@ const reduser = (state = initialState, action: string) => {
   }
 };
 
-const store = createStore(reduser);
+const store = createStore(
+  combineReducers({ jobs: jobsReduser, candidates: candidatesReduser })
+);
 
 export default store;

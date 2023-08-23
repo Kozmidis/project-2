@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { connect } from "react-redux";
 import type { TabsProps, MenuProps } from "antd";
 import { CalendarFilled } from "@ant-design/icons";
@@ -5,6 +6,7 @@ import { Dropdown, Space, Tabs, Tag } from "antd";
 import { TabCards } from "@/components/TabCards/TabCards";
 
 export type CardsType = {
+  jobs: {};
   id: number;
   title: string;
   spec: string;
@@ -16,7 +18,7 @@ export type CardsType = {
   candidates: string;
 };
 
-function Cards(props: any) {
+const Cards: FC<any> = (props) => {
   console.log("render > ", props);
 
   const onChange = (key: string) => {
@@ -40,7 +42,7 @@ function Cards(props: any) {
           <Tag color="blue">3</Tag>
         </div>
       ),
-      children: <TabCards {...props} />,
+      children: <TabCards jobs={props.jobs} />,
     },
     {
       key: "2",
@@ -50,7 +52,7 @@ function Cards(props: any) {
           <Tag color="blue">1</Tag>
         </div>
       ),
-      children: <TabCards {...props} />,
+      children: <TabCards jobs={props.jobs} />,
     },
     {
       key: "3",
@@ -60,7 +62,7 @@ function Cards(props: any) {
           <Tag color="blue">2</Tag>
         </div>
       ),
-      children: <TabCards {...props} />,
+      children: <TabCards jobs={props.jobs} />,
     },
   ];
 
@@ -102,11 +104,11 @@ function Cards(props: any) {
       <Tabs defaultActiveKey="1" items={itemsTabs} onChange={onChange} />
     </>
   );
-}
+};
 
-function mapStateToProps(state: CardsType) {
-  console.log("mapStateToProps >", state);
-  return { state: state };
+function mapStateToProps({ jobs }: CardsType) {
+  console.log("JobsmapStateToProps >", jobs);
+  return { jobs };
 }
 
 function mapDispatchToProps(dispatch: any) {
