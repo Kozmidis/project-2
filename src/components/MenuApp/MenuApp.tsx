@@ -86,13 +86,8 @@ type MenuAppProps = {
 };
 
 const MenuApp: React.FC<MenuAppProps> = ({ pathName }) => {
-  const onClick: MenuProps["onClick"] = (e) => {
-    console.log("click ", e);
-  };
-
   return (
     <Menu
-      onClick={onClick}
       style={{ width: "100%" }}
       defaultSelectedKeys={[pathName]}
       defaultOpenKeys={["sub1"]}

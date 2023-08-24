@@ -19,8 +19,6 @@ export type CardsType = {
 };
 
 const Cards: FC<any> = (props) => {
-  console.log("render > ", props);
-
   const onChange = (key: string) => {
     if (key === "1") {
       props.onActiveCards();
@@ -69,11 +67,9 @@ const Cards: FC<any> = (props) => {
   const onClick: MenuProps["onClick"] = ({ key }) => {
     if (key === "1") {
       props.ascDate();
-      console.log(`asc ${key}`);
     }
     if (key === "2") {
       props.descDate();
-      console.log(`desc ${key}`);
     }
   };
 
@@ -107,7 +103,6 @@ const Cards: FC<any> = (props) => {
 };
 
 function mapStateToProps({ jobs }: CardsType) {
-  console.log("JobsmapStateToProps >", jobs);
   return { jobs };
 }
 

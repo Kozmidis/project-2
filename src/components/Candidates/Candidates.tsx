@@ -8,15 +8,96 @@ import { Button, Dropdown, DatePicker, Checkbox } from "antd";
 import type { MenuProps } from "antd";
 import type { CheckboxValueType } from "antd/es/checkbox/Group";
 
+interface ICandidates {
+  id: number;
+  firstname: string;
+  lastname: string;
+  birthday: string;
+  gender: string;
+  address: AddressType;
+  image: string;
+  age: string;
+}
+
+interface AddressType {
+  id: number;
+  city: string;
+}
+
+const prepareGenderForApi = (list: any) => {
+  let gender = "";
+  if (
+    (list.includes("Male") && list.includes("Female")) ||
+    (!list.includes("Male") && !list.includes("Female"))
+  ) {
+    gender = "";
+  }
+  if (list.includes("Male") && !list.includes("Female")) {
+    gender = "male";
+  }
+  if (!list.includes("Male") && list.includes("Female")) {
+    gender = "female";
+  }
+  return gender;
+};
+
 const CheckboxGroup = Checkbox.Group;
 
 const plainOptions = ["Male", "Female"];
-const defaultCheckedList = ["Male", "Female"];
-
-const Candidates: FC = () => {
+const Candidates: FC = ({
+  saveItems,
+  candidates,
+  setFilterGender,
+  setFilterDate,
+  filter,
+  sort,
+  setSort,
+}: any) => {
   const position = "bottom";
   const align = "center";
 
+  console.log(candidates);
+
+  const sortName = (candidates: any, sort: any) => {
+    if (sort.name === "asc") {
+      candidates.sort(function (a: any, b: any) {
+        var textA = a.firstname.toUpperCase();
+        var textB = b.firstname.toUpperCase();
+        return textA < textB ? -1 : textA > textB ? 1 : 0;
+      });
+    }
+    if (sort.name === "desc") {
+      candidates.sort(function (a: any, b: any) {
+        var textA = a.firstname.toUpperCase();
+        var textB = b.firstname.toUpperCase();
+        return textB < textA ? -1 : textB > textA ? 1 : 0;
+      });
+    }
+  };
+  const sortAge = (candidates: any, sort: any) => {
+    if (sort.name === "asc") {
+      candidates.sort(function (a: any, b: any) {
+        return parseFloat(a.birthday) - parseFloat(b.birthday);
+      });
+    }
+    if (sort.name === "desc") {
+      candidates.sort(function (a: any, b: any) {
+        return parseFloat(b.birthday) - parseFloat(a.birthday);
+      });
+    }
+  };
+  const sortGender = (candidates: any, sort: any) => {
+    if (sort.name === "asc") {
+      candidates.sort(function (a: any, b: any) {
+        return a.gender.localeCompare(b.gender);
+      });
+    }
+    if (sort.name === "desc") {
+      candidates.sort(function (a: any, b: any) {
+        return b.gender.localeCompare(a.gender);
+      });
+    }
+  };
   function getAge(dateString: string) {
     var today = new Date();
     var birthDate = new Date(dateString);
@@ -29,31 +110,31 @@ const Candidates: FC = () => {
   }
   const [open, setOpen] = useState(false);
 
-  async function api() {
-    await fetch(
-      `https://fakerapi.it/api/v1/persons?_quantity=50&_birthday_start=1980-01-01&_birthday_end=2000-01-01&_gender=&_locale=fr_FR`
+  function requestItems(filter: any) {
+    return fetch(
+      `https://fakerapi.it/api/v1/persons?_quantity=50&_birthday_start=${
+        filter.date.before
+      }&_birthday_end=${filter.date.after}&_gender=${prepareGenderForApi(
+        filter.gender
+      )}&_locale=fr_FR`
     ).then(async (res) => {
       const data = await res.json();
-      console.log(data.data);
-      setApiState(data.data);
+      return data.data;
     });
   }
-  const [apiState, setApiState] = useState([]);
-  useEffect(() => {
-    api();
-  }, []);
+  function requestAndSaveItems(filter: any) {
+    requestItems(filter).then((items) => {
+      saveItems(items);
+    });
+  }
 
+  useEffect(() => {
+    requestAndSaveItems(filter);
+  }, [filter]);
   //Date
   const { RangePicker } = DatePicker;
 
   //Фильтр ЧЕКБОКСЫ
-  const [checkedList, setCheckedList] =
-    useState<CheckboxValueType[]>(defaultCheckedList);
-
-  const onChange = (list: CheckboxValueType[]) => {
-    setCheckedList(list);
-    api();
-  };
 
   const items: MenuProps["items"] = [
     {
@@ -63,8 +144,8 @@ const Candidates: FC = () => {
           <CheckboxGroup
             style={{ display: "flex", justifyContent: "center" }}
             options={plainOptions}
-            value={checkedList}
-            onChange={onChange}
+            value={filter.gender}
+            onChange={setFilterGender}
           />
         </>
       ),
@@ -78,8 +159,24 @@ const Candidates: FC = () => {
         <>
           <h3 style={{ textAlign: "center", paddingBottom: 5 }}>Dates</h3>
           <RangePicker
+            picker="year"
             onChange={(e) => {
-              console.log(e);
+              const dateBefore = new Date(e![0] as unknown as Date);
+              let before =
+                dateBefore.getFullYear() +
+                "/" +
+                dateBefore.getMonth() +
+                "/" +
+                dateBefore.getDate();
+
+              const dateAfter = new Date(e![1] as unknown as Date);
+              let after =
+                dateAfter.getFullYear() +
+                "/" +
+                dateAfter.getMonth() +
+                "/" +
+                dateAfter.getDate();
+              setFilterDate({ before, after });
             }}
           />
         </>
@@ -158,6 +255,16 @@ const Candidates: FC = () => {
         }}
       >
         <div
+          onClick={(e) => {
+            if (sort.name == "asc") {
+              setSort("name", "desc");
+            }
+            if (sort.name == "desc") {
+              setSort("name", "asc");
+            }
+
+            sortName(candidates, sort);
+          }}
           style={{
             cursor: "pointer",
             width: "100%",
@@ -168,6 +275,15 @@ const Candidates: FC = () => {
           Name <SwapOutlined rotate={90} />
         </div>
         <div
+          onClick={(e) => {
+            if (sort.name == "asc") {
+              setSort("name", "desc");
+            }
+            if (sort.name == "desc") {
+              setSort("name", "asc");
+            }
+            sortAge(candidates, sort);
+          }}
           style={{
             cursor: "pointer",
             width: "100%",
@@ -175,9 +291,20 @@ const Candidates: FC = () => {
             borderRight: "1px solid #b3b3b3",
           }}
         >
-          Date <SwapOutlined rotate={90} />
+          Age <SwapOutlined rotate={90} />
         </div>
-        <div style={{ cursor: "pointer", width: "100%", textAlign: "center" }}>
+        <div
+          onClick={(e) => {
+            if (sort.name == "asc") {
+              setSort("name", "desc");
+            }
+            if (sort.name == "desc") {
+              setSort("name", "asc");
+            }
+            sortGender(candidates, sort);
+          }}
+          style={{ cursor: "pointer", width: "100%", textAlign: "center" }}
+        >
           Gender <SwapOutlined rotate={90} />
         </div>
       </div>
@@ -192,7 +319,7 @@ const Candidates: FC = () => {
           align,
           pageSize: 5,
         }}
-        dataSource={apiState}
+        dataSource={candidates}
         renderItem={(item: any, index) => (
           <List.Item>
             <List.Item.Meta
@@ -241,9 +368,29 @@ const Candidates: FC = () => {
     </>
   );
 };
-function mapStateToProps({ candidates }: any) {
-  console.log("CandidatesmapStateToProps >", candidates);
-  return { candidates };
+function mapStateToProps({ candidates, filter, sort }: any) {
+  return { candidates, filter, sort };
 }
 
-export default connect(mapStateToProps)(Candidates);
+function mapDispatchToProps(dispatch: any) {
+  return {
+    saveItems: (items: ICandidates[]) => {
+      const action = { type: "GET_API", payload: items };
+      dispatch(action);
+    },
+    setFilterGender: (gender: any) => {
+      const action = { type: "SET_GENDER", payload: gender };
+      dispatch(action);
+    },
+    setFilterDate: (date: any) => {
+      const action = { type: "SET_DATE", payload: date };
+      dispatch(action);
+    },
+    setSort: (key: any, value: any) => {
+      const action = { type: "SET_SORT", payload: { key, value } };
+      dispatch(action);
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Candidates);

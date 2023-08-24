@@ -1,10 +1,7 @@
 export const candidatesReduser = (state = [], action: any) => {
-  console.log("reduser > ", action);
-
   switch (action.type) {
-    case "SET":
-      return [...state, 1];
-
+    case "GET_API":
+      return [...(action.payload || [])];
     default:
       return state;
   }
