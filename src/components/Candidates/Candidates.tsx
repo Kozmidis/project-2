@@ -6,23 +6,7 @@ import { SwapOutlined } from "@ant-design/icons";
 import { FilterFilled } from "@ant-design/icons";
 import { Button, Dropdown, DatePicker, Checkbox } from "antd";
 import type { MenuProps } from "antd";
-import type { CheckboxValueType } from "antd/es/checkbox/Group";
-
-interface ICandidates {
-  id: number;
-  firstname: string;
-  lastname: string;
-  birthday: string;
-  gender: string;
-  address: AddressType;
-  image: string;
-  age: string;
-}
-
-interface AddressType {
-  id: number;
-  city: string;
-}
+import { ICandidates } from "@/types/types";
 
 const prepareGenderForApi = (list: any) => {
   let gender = "";
@@ -55,8 +39,6 @@ const Candidates: FC = ({
 }: any) => {
   const position = "bottom";
   const align = "center";
-
-  console.log(candidates);
 
   const sortName = (candidates: any, sort: any) => {
     if (sort.name === "asc") {

@@ -1,7 +1,9 @@
-import { CardApp } from "@/Redux/CardApp";
-import { CardsType } from "@/Redux/Cards";
+import { CardApp } from "@/components/CardsApp/CardApp";
+import { FC } from "react";
+import { Jobs, CardsType } from "@/types/types";
 
-export const TabCards = (props: any) => {
+export const TabCards: FC<Jobs> = (props) => {
+  console.log(props);
   return (
     <div
       style={{

@@ -4,21 +4,9 @@ import type { TabsProps, MenuProps } from "antd";
 import { CalendarFilled } from "@ant-design/icons";
 import { Dropdown, Space, Tabs, Tag } from "antd";
 import { TabCards } from "@/components/TabCards/TabCards";
+import { Jobs } from "@/types/types";
 
-export type CardsType = {
-  jobs: {};
-  id: number;
-  title: string;
-  spec: string;
-  subTitle: string;
-  text: string;
-  cardType: string;
-  logo: string;
-  date: string;
-  candidates: string;
-};
-
-const Cards: FC<any> = (props) => {
+const Cards: FC<Jobs> = (props) => {
   const onChange = (key: string) => {
     if (key === "1") {
       props.onActiveCards();
@@ -102,7 +90,7 @@ const Cards: FC<any> = (props) => {
   );
 };
 
-function mapStateToProps({ jobs }: CardsType) {
+function mapStateToProps({ jobs }: Jobs) {
   return { jobs };
 }
 
