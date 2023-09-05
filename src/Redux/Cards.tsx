@@ -95,6 +95,7 @@ function mapStateToProps({ jobs }: Jobs) {
 }
 
 function mapDispatchToProps(dispatch: any) {
+  //todo
   return {
     onActiveCards: () => {
       const action = { type: "ACTIVE" };
